@@ -3,15 +3,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shadow Xpress — Admin Panel</title>
+    <title>Shadow Xpress — Document Generator</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&display=swap" rel="stylesheet" />
     <style>
-        /* ── Reset & base ── */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: #f6f8fc;
@@ -22,7 +18,6 @@
             justify-content: center;
             padding: 24px;
         }
-        /* ── Card ── */
         .app-wrapper {
             max-width: 1400px;
             width: 100%;
@@ -30,9 +25,7 @@
             border-radius: 28px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.04);
             overflow: hidden;
-            transition: all 0.2s;
         }
-        /* ── Header ── */
         .app-header {
             background: linear-gradient(135deg, #1a0f0a 0%, #2b0400 100%);
             padding: 20px 36px;
@@ -58,13 +51,11 @@
             font-size: 20px;
             font-weight: 700;
             color: #f5cba0;
-            letter-spacing: -0.5px;
         }
         .app-header .brand h1 {
             font-size: 22px;
             font-weight: 600;
             color: #fff;
-            letter-spacing: -0.3px;
         }
         .app-header .brand h1 span {
             font-weight: 300;
@@ -76,15 +67,25 @@
             border-radius: 40px;
             color: rgba(255, 255, 255, 0.75);
             font-size: 13px;
-            font-weight: 400;
             border: 1px solid rgba(255, 255, 255, 0.06);
         }
-        .app-header .badge i {
-            font-style: normal;
-            margin-right: 6px;
+        .status-badge {
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 40px;
+            background: #eef2f7;
+            color: #4a5a72;
+        }
+        .status-badge.ready {
+            background: #e8f5e9;
+            color: #1e7e34;
+        }
+        .flex {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        /* ── Body ── */
         .app-body {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -100,7 +101,6 @@
             }
         }
 
-        /* ── Left: Form ── */
         .form-section {
             padding-right: 28px;
             border-right: 1px solid #eef2f7;
@@ -146,14 +146,12 @@
             font-size: 13px;
             font-weight: 500;
             color: #2d3a4f;
-            letter-spacing: 0.2px;
         }
         .form-group label .required {
             color: #c0392b;
             margin-left: 2px;
         }
-        .form-group input,
-        .form-group textarea {
+        .form-group input {
             font-family: 'Inter', sans-serif;
             font-size: 14px;
             padding: 10px 14px;
@@ -165,18 +163,9 @@
             color: #1a1a2e;
             width: 100%;
         }
-        .form-group input:focus,
-        .form-group textarea:focus {
+        .form-group input:focus {
             border-color: #2b0400;
             box-shadow: 0 0 0 3px rgba(43, 4, 0, 0.08);
-        }
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: #aab3c5;
-        }
-        .form-group textarea {
-            resize: vertical;
-            min-height: 44px;
         }
         .form-group .hint {
             font-size: 12px;
@@ -187,7 +176,6 @@
             grid-column: 1 / -1;
         }
 
-        /* ── Buttons ── */
         .actions {
             display: flex;
             flex-wrap: wrap;
@@ -208,16 +196,12 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            text-decoration: none;
             background: #f1f4f9;
             color: #1a1a2e;
         }
         .btn:hover {
             transform: translateY(-1px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-        }
-        .btn:active {
-            transform: translateY(0);
         }
         .btn-primary {
             background: #2b0400;
@@ -226,13 +210,6 @@
         .btn-primary:hover {
             background: #3d0a04;
             box-shadow: 0 8px 24px rgba(43, 4, 0, 0.20);
-        }
-        .btn-secondary {
-            background: #eef2f7;
-            color: #1a1a2e;
-        }
-        .btn-secondary:hover {
-            background: #e2e8f0;
         }
         .btn-success {
             background: #0e6b4c;
@@ -251,21 +228,7 @@
             background: #f1f4f9;
             border-color: #b0bcca;
         }
-        .btn-danger {
-            background: #b91c1c;
-            color: #fff;
-        }
-        .btn-danger:hover {
-            background: #a01515;
-        }
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none !important;
-            box-shadow: none !important;
-        }
 
-        /* ── Right: Preview ── */
         .preview-section {
             padding-left: 28px;
             display: flex;
@@ -336,77 +299,7 @@
             margin-bottom: 14px;
             opacity: 0.4;
         }
-        .preview-frame .placeholder strong {
-            color: #6b7a8f;
-            font-weight: 500;
-        }
 
-        /* ── Token input (hidden by default, toggle) ── */
-        .token-section {
-            margin-top: 14px;
-            padding: 14px 18px;
-            background: #f8faff;
-            border-radius: 12px;
-            border: 1px dashed #d0d8e4;
-            display: none;
-            align-items: center;
-            gap: 14px;
-            flex-wrap: wrap;
-        }
-        .token-section.visible {
-            display: flex;
-        }
-        .token-section label {
-            font-size: 13px;
-            font-weight: 500;
-            color: #2d3a4f;
-            white-space: nowrap;
-        }
-        .token-section input {
-            flex: 1;
-            min-width: 200px;
-            font-family: 'Inter', sans-serif;
-            font-size: 13px;
-            padding: 8px 14px;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 8px;
-            background: #fff;
-            outline: none;
-        }
-        .token-section input:focus {
-            border-color: #2b0400;
-            box-shadow: 0 0 0 3px rgba(43, 4, 0, 0.06);
-        }
-        .token-section .btn-sm {
-            font-size: 12px;
-            padding: 6px 16px;
-            border-radius: 8px;
-            background: #2b0400;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            font-weight: 500;
-            transition: 0.2s;
-        }
-        .token-section .btn-sm:hover {
-            background: #3d0a04;
-        }
-        .token-section .btn-sm-outline {
-            background: transparent;
-            border: 1.5px solid #d0d8e4;
-            color: #1a1a2e;
-            font-size: 12px;
-            padding: 6px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: 0.2s;
-        }
-        .token-section .btn-sm-outline:hover {
-            background: #f1f4f9;
-        }
-
-        /* ── Toast ── */
         .toast-container {
             position: fixed;
             bottom: 30px;
@@ -438,17 +331,8 @@
             border-left-color: #3498db;
         }
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .toast .toast-icon {
-            font-size: 20px;
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .toast .toast-close {
             margin-left: auto;
@@ -468,72 +352,14 @@
         .toast .toast-close:hover {
             background: rgba(255, 255, 255, 0.20);
         }
-
-        /* ── Misc ── */
-        .status-badge {
-            font-size: 12px;
-            padding: 4px 12px;
-            border-radius: 40px;
-            background: #eef2f7;
-            color: #4a5a72;
-        }
-        .status-badge.ready {
-            background: #e8f5e9;
-            color: #1e7e34;
-        }
-        .flex {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .gap-4 {
-            gap: 4px;
-        }
-
-        /* ── Spinner ── */
-        .spinner {
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-            border: 2.5px solid rgba(255, 255, 255, 0.20);
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-        }
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* ── Responsive tweaks ── */
         @media (max-width: 600px) {
-            .app-header {
-                padding: 16px 20px;
-            }
-            .app-header .brand h1 {
-                font-size: 17px;
-            }
-            .app-body {
-                padding: 16px;
-            }
-            .actions .btn {
-                flex: 1;
-                justify-content: center;
-            }
-            .preview-frame {
-                min-height: 400px;
-            }
-            .preview-frame iframe {
-                min-height: 400px;
-            }
-            .preview-frame .placeholder {
-                min-height: 400px;
-            }
-            .token-section {
-                flex-direction: column;
-                align-items: stretch;
-            }
+            .app-header { padding: 16px 20px; }
+            .app-header .brand h1 { font-size: 17px; }
+            .app-body { padding: 16px; }
+            .actions .btn { flex: 1; justify-content: center; }
+            .preview-frame { min-height: 400px; }
+            .preview-frame iframe { min-height: 400px; }
+            .preview-frame .placeholder { min-height: 400px; }
         }
     </style>
 </head>
@@ -541,110 +367,83 @@
 
     <div class="app-wrapper" id="app">
 
-        <!-- ===== HEADER ===== -->
         <header class="app-header">
             <div class="brand">
                 <div class="logo-icon">✪</div>
-                <h1>Shadow <span>Admin</span></h1>
+                <h1>Shadow <span>Generator</span></h1>
             </div>
             <div class="flex">
                 <span class="badge"><i>📁</i> passport-dtl</span>
-                <span class="status-badge ready" id="connectionStatus">● Ready</span>
+                <span class="status-badge ready">● Ready</span>
             </div>
         </header>
 
-        <!-- ===== BODY ===== -->
         <div class="app-body">
 
-            <!-- ─── LEFT: FORM ─── -->
             <section class="form-section">
                 <div class="section-title">✎ Edit Offer Details</div>
-                <div class="section-sub">Fill in the fields below, then preview &amp; upload to GitHub.</div>
+                <div class="section-sub">Fill in the fields below, preview &amp; download HTML.</div>
 
                 <div class="form-grid" id="formGrid">
-                    <!-- Name -->
                     <div class="form-group">
                         <label>Full Name <span class="required">*</span></label>
-                        <input type="text" id="f_name" value="MOHSIN RAZA" placeholder="e.g. MOHSIN RAZA" />
+                        <input type="text" id="f_name" value="MOHSIN RAZA" />
                     </div>
-                    <!-- Passport -->
                     <div class="form-group">
                         <label>Passport No <span class="required">*</span></label>
-                        <input type="text" id="f_passport" value="VH9899641" placeholder="e.g. VH9899641" />
+                        <input type="text" id="f_passport" value="VH9899641" />
+                        <span class="hint">📁 File will be saved as: <strong id="filenamePreview">VH9899641.html</strong></span>
                     </div>
-                    <!-- Date -->
                     <div class="form-group">
                         <label>Date</label>
-                        <input type="text" id="f_date" value="18 July, 2026" placeholder="e.g. 18 July, 2026" />
+                        <input type="text" id="f_date" value="18 July, 2026" />
                     </div>
-                    <!-- Country -->
                     <div class="form-group">
                         <label>Country</label>
-                        <input type="text" id="f_country" value="Pakistan" placeholder="e.g. Pakistan" />
+                        <input type="text" id="f_country" value="Pakistan" />
                     </div>
-                    <!-- Job Profile -->
                     <div class="form-group">
                         <label>Job Profile <span class="required">*</span></label>
-                        <input type="text" id="f_job" value="MECHANIC" placeholder="e.g. MECHANIC" />
+                        <input type="text" id="f_job" value="MECHANIC" />
                     </div>
-                    <!-- Salary -->
                     <div class="form-group">
                         <label>Salary (USD)</label>
-                        <input type="text" id="f_salary" value="3500" placeholder="e.g. 3500" />
+                        <input type="text" id="f_salary" value="3500" />
                     </div>
-                    <!-- Working Hours -->
                     <div class="form-group full-width">
                         <label>Working Hours</label>
-                        <input type="text" id="f_hours" value="48 Hours in a week, 6 days in a week." placeholder="e.g. 48 Hours in a week, 6 days in a week." />
+                        <input type="text" id="f_hours" value="48 Hours in a week, 6 days in a week." />
                     </div>
-                    <!-- Probation -->
                     <div class="form-group">
                         <label>Probation Period</label>
-                        <input type="text" id="f_probation" value="60 Days" placeholder="e.g. 60 Days" />
+                        <input type="text" id="f_probation" value="60 Days" />
                     </div>
-                    <!-- Contract -->
                     <div class="form-group">
                         <label>Contract Period</label>
-                        <input type="text" id="f_contract" value="Two Years" placeholder="e.g. Two Years" />
+                        <input type="text" id="f_contract" value="Two Years" />
                     </div>
-                    <!-- Accommodation -->
                     <div class="form-group full-width">
                         <label>Accommodation</label>
-                        <input type="text" id="f_accommodation" value="(Quad Sharing Rooms) – Two (2)" placeholder="e.g. (Quad Sharing Rooms) – Two (2)" />
+                        <input type="text" id="f_accommodation" value="(Quad Sharing Rooms) – Two (2)" />
                     </div>
-                    <!-- Invoice -->
                     <div class="form-group">
                         <label>Invoice No</label>
-                        <input type="text" id="f_invoice" value="GJ316940" placeholder="e.g. GJ316940" />
+                        <input type="text" id="f_invoice" value="GJ316940" />
                     </div>
-                    <!-- Photo URL -->
                     <div class="form-group">
                         <label>Photo URL (optional)</label>
-                        <input type="text" id="f_photo" value="" placeholder="https://example.com/photo.jpg" />
+                        <input type="text" id="f_photo" value="https://ui-avatars.com/api/?name=MOHSIN+RAZA&background=2B0400&color=fff&size=100" />
                         <span class="hint">Direct image URL for the applicant photo</span>
                     </div>
                 </div>
 
-                <!-- Actions -->
                 <div class="actions">
                     <button class="btn btn-primary" id="btnPreview">👁️ Preview</button>
-                    <button class="btn btn-success" id="btnUpload">⬆ Upload to GitHub</button>
-                    <button class="btn btn-secondary" id="btnDownload">⬇ Download HTML</button>
-                    <button class="btn btn-outline" id="btnToggleToken">🔑 Token</button>
+                    <button class="btn btn-success" id="btnDownload">⬇ Download HTML</button>
                     <button class="btn btn-outline" id="btnReset">↺ Reset</button>
-                </div>
-
-                <!-- Token section (hidden by default) -->
-                <div class="token-section" id="tokenSection">
-                    <label>GitHub Token</label>
-                    <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" />
-                    <button class="btn-sm" id="btnSaveToken">Save</button>
-                    <button class="btn-sm-outline" id="btnClearToken">Clear</button>
-                    <span style="font-size:12px;color:#8a99b0;margin-left:auto;">needs <strong>repo</strong> scope</span>
                 </div>
             </section>
 
-            <!-- ─── RIGHT: PREVIEW ─── -->
             <section class="preview-section">
                 <div class="preview-header">
                     <div class="title">
@@ -660,7 +459,7 @@
                         <div class="icon">📄</div>
                         <div>
                             <strong>No document generated yet</strong><br />
-                            Fill in the form and click <strong>“Preview”</strong>
+                            Fill in the form and click <strong>"Preview"</strong>
                         </div>
                     </div>
                     <iframe id="previewIframe" style="display:none;"></iframe>
@@ -670,16 +469,12 @@
         </div>
     </div>
 
-    <!-- ===== TOAST CONTAINER ===== -->
     <div class="toast-container" id="toastContainer"></div>
 
-    <!-- ============================================================ -->
-    <!-- ===== JAVASCRIPT ===== -->
     <script>
         (function() {
             'use strict';
 
-            // ── DOM refs ──
             const $ = (id) => document.getElementById(id);
             const f_name = $('f_name'),
                 f_passport = $('f_passport'),
@@ -695,37 +490,24 @@
                 f_photo = $('f_photo');
 
             const btnPreview = $('btnPreview'),
-                btnUpload = $('btnUpload'),
                 btnDownload = $('btnDownload'),
-                btnToggleToken = $('btnToggleToken'),
                 btnReset = $('btnReset');
-            const tokenSection = $('tokenSection'),
-                githubToken = $('githubToken'),
-                btnSaveToken = $('btnSaveToken'),
-                btnClearToken = $('btnClearToken');
             const previewIframe = $('previewIframe'),
                 placeholder = $('placeholder'),
                 previewDot = $('previewDot'),
                 fileStatus = $('fileStatus'),
-                connectionStatus = $('connectionStatus');
-
+                filenamePreview = $('filenamePreview');
             const toastContainer = $('toastContainer');
 
-            // ── State ──
             let currentHtml = '';
             let currentFilename = '';
-            let isUploading = false;
 
-            // ── Load token from localStorage ──
-            (function loadToken() {
-                const saved = localStorage.getItem('gh_token');
-                if (saved) {
-                    githubToken.value = saved;
-                    tokenSection.classList.add('visible');
-                }
-            })();
+            function updateFilenamePreview() {
+                const passport = f_passport.value.trim() || 'default';
+                filenamePreview.textContent = `${passport}.html`;
+            }
+            f_passport.addEventListener('input', updateFilenamePreview);
 
-            // ── Toast system ──
             function showToast(message, type = 'success', duration = 4500) {
                 const icons = { success: '✅', error: '❌', info: 'ℹ️' };
                 const toast = document.createElement('div');
@@ -743,7 +525,6 @@
                 }, duration);
             }
 
-            // ── Get all form data ──
             function getFormData() {
                 return {
                     name: f_name.value.trim() || 'MOHSIN RAZA',
@@ -761,215 +542,268 @@
                 };
             }
 
-            // ── Build the full HTML document ──
             function buildHtml(data) {
-                // photo HTML
-                let photoHtml = '<div class="photo-placeholder">No photo added</div>';
+                // ── TOP PHOTO (QR Code position) ──
+                let topPhotoHtml = `
+                    <div style="width:120px;height:120px;background:#2B0400;color:#fff;display:flex;align-items:center;justify-content:center;border-radius:4px;font-size:18px;font-weight:600;border:2px solid #2B0400;margin:0 auto;">
+                        ${data.name.substring(0,2).toUpperCase()}
+                    </div>
+                `;
                 if (data.photo_url) {
-                    photoHtml =
-                        `<img src="${data.photo_url}" alt="Applicant Photo" class="photo-preview" onerror="this.outerHTML='<div class=photo-placeholder>Invalid image URL</div>'">`;
+                    topPhotoHtml = `
+                        <img src="${data.photo_url}" alt="Applicant Photo" style="width:120px;height:120px;object-fit:cover;border:2px solid #2B0400;border-radius:4px;display:block;margin:0 auto;" 
+                             onerror="this.outerHTML='<div style=\\'width:120px;height:120px;background:#2B0400;color:#fff;display:flex;align-items:center;justify-content:center;border-radius:4px;font-size:18px;font-weight:600;border:2px solid #2B0400;margin:0 auto;\\'>${data.name.substring(0,2).toUpperCase()}</div>'">
+                    `;
                 }
 
-                // Use a template literal — we embed the whole HTML exactly as in the Python script
-                // but with ${...} placeholders.
+                // ── PHOTO in Biometric section ──
+                let bioPhotoHtml = `
+                    <div style="width:100px;height:100px;background:#2B0400;color:#fff;display:flex;align-items:center;justify-content:center;border-radius:4px;font-size:14px;font-weight:600;border:2px solid #2B0400;">
+                        ${data.name.substring(0,2).toUpperCase()}
+                    </div>
+                `;
+                if (data.photo_url) {
+                    bioPhotoHtml = `
+                        <img src="${data.photo_url}" alt="Applicant Photo" style="width:100px;height:100px;object-fit:cover;border:2px solid #2B0400;border-radius:4px;display:block;" 
+                             onerror="this.outerHTML='<div style=\\'width:100px;height:100px;background:#2B0400;color:#fff;display:flex;align-items:center;justify-content:center;border-radius:4px;font-size:14px;font-weight:600;border:2px solid #2B0400;\\'>${data.name.substring(0,2).toUpperCase()}</div>'">
+                    `;
+                }
+
+                // ── Stamp placeholder ──
+                const stampHtml = `
+                    <div style="max-width:50%;margin:10px auto;padding:20px;border:2px solid #2B0400;border-radius:8px;text-align:center;background:#fafafa;">
+                        <div style="font-size:14px;font-weight:700;color:#2B0400;letter-spacing:2px;">SHADOW EXPRESS</div>
+                        <div style="font-size:11px;color:#555;margin:5px 0;">COMPANY STAMP</div>
+                        <div style="width:60px;height:60px;border-radius:50%;border:2px solid #2B0400;margin:5px auto;display:flex;align-items:center;justify-content:center;font-size:20px;">✪</div>
+                        <div style="font-size:10px;color:#888;margin-top:5px;">AUTHORIZED SIGNATURE</div>
+                    </div>
+                `;
+
                 return `<!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Job Offer - ${data.name}</title>
-            <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-            <style>
-                * { margin: 0; padding: 0; box-sizing: border-box; }
-                body { font-family: 'Inter', sans-serif; background: #f0f2f5; padding: 20px; color: #000; }
-                .container { max-width: 900px; margin: 0 auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); overflow: hidden; }
-                .header { background: #2B0400; color: #fff; padding: 12px 24px; font-size: 14px; font-weight: 600; }
-                #content { padding: 40px 45px 50px; font-family: 'Noto Serif', serif; }
-                .app-row.StatusCus { font-size: 14px; font-family: 'Noto Serif'; color: black; font-weight: 600; margin-bottom: 12px; }
-                .TopinfoW { display: grid; grid-template-columns: 55% 45%; margin-bottom: 8px; }
-                .ShadoInfoTp h6 { font-size: 18px; font-family: 'Noto Serif'; color: #2B0400; line-height: 10px; font-weight: 400; letter-spacing: 0.4px; margin: 0; }
-                .InnerQR { max-width: 30% !important; height: 180px; }
-                .InnerQR img { width: 120px !important; object-fit: cover; height: 120px; object-position: top; display: block; }
-                .UserinfoTp { margin-top: 5px; }
-                .UserinfoTp .app-row { font-size: 18px; font-family: 'Noto Serif'; color: black; text-transform: capitalize; line-height: 30px; font-weight: 400; }
-                .Subjectline h6 { font-size: 18px; font-family: 'Noto Serif'; color: black; letter-spacing: 0px; font-weight: 400; font-style: normal; margin: 16px 0 10px; }
-                .DataSecondPara .app-row { font-size: 18px; text-transform: capitalize; color: black; font-weight: 400; font-family: 'Noto Serif'; margin-bottom: 6px; }
-                .DataSecondPara p { font-size: 18px; font-family: 'Noto Serif'; color: black; line-height: 30px; max-width: 100%; margin-bottom: 10px; }
-                table { width: 100%; border-collapse: collapse; margin: 10px 0; }
-                table td, table th { padding: 8px 12px; border: 1px solid #222; font-family: 'Noto Serif', serif; font-size: 16px; }
-                table th { background: #f2f2f2; font-weight: 600; }
-                .TermandpolicyBox { margin-top: 12px; }
-                .TermandpolicyBox ul { padding: 0px 0px 0px 20px; margin-bottom: 10px; }
-                .TermandpolicyBox ul li { font-size: 18px; font-family: 'Noto Serif'; color: black; line-height: 30px; }
-                .TermandpolicyBox p { font-size: 18px; font-family: 'Noto Serif'; font-weight: 400; color: black; line-height: 25px; margin-bottom: 8px; }
-                .TermandpolicyBox h3 { font-size: 26px; color: black; font-family: 'Noto Serif'; font-weight: 600; margin: 0px 0px 0px 0px; }
-                .StampImageCus { display: flex; align-items: center; justify-content: center; margin: 20px 0; }
-                .Staminner { max-width: 50%; margin: 10px auto; }
-                .Staminner img { max-width: 100%; display: block; }
-                .photo-placeholder { width: 100px; height: 100px; background: #eee; border: 1px dashed #ccc; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #999; text-align: center; }
-                .ToCopySec h2 { font-size: 24px; font-family: 'Noto Serif'; color: black; font-weight: 600; margin-top: 20px; }
-                .ToCopySec ul { padding: 0px 0px 0px 20px; }
-                .ToCopySec ul li { font-size: 16px; font-family: 'Noto Serif'; color: black; line-height: 31px; }
-                .BioMatricSlip > h4 { font-size: 22px; font-family: 'Noto Serif'; color: black; font-weight: 600; margin-top: 25px; }
-                .BioMatricSlip { margin-top: 20px; }
-                .BiodataFirst { display: grid; grid-template-columns: 1fr 1fr; column-gap: 20px; row-gap: 7px; margin: 10px 0; }
-                .BiodataFirst .app-row { font-size: 18px; font-family: 'Noto Serif'; color: black; font-weight: 500; }
-                .BioShortEmail { margin-top: 10px; border-bottom: 1px solid #000; max-width: 40%; padding: 0px 0px 5px 0px; }
-                .BioShortEmail .app-row { font-size: 18px; font-family: 'Noto Serif'; color: black; font-weight: 500; }
-                .BioPaymentvou h3 { font-size: 20px; color: black; font-family: 'Noto Serif'; font-weight: 500; margin: 18px 0 8px; }
-                .BioPaymentvou { margin-top: 30px; }
-                .PaymentstatusCus .app-row { font-size: 22px; font-family: 'Noto Serif'; color: black; font-weight: 500; margin: 6px 0; }
-                .Bioterms h2 { font-size: 22px; font-family: 'Noto Serif'; color: black; font-weight: 500; margin: 0; }
-                .Bioterms { margin-top: 20px; }
-                .Bioterms p { font-size: 16px; font-family: 'Noto Serif'; color: black; margin: 0; line-height: 26px; }
-                .photo-preview { width: 100px; height: 100px; object-fit: cover; border: 1px solid #ddd; border-radius: 4px; display: block; }
-                @media print { body { background: #fff; padding: 0; } .header { display: none; } }
-            </style>
-        </head>
-        <body>
-        <div class="container">
-            <div class="header">📄 Document Preview</div>
-            <div id="content">
-                <div class="app-row StatusCus">Status: <span style="color:green;">Published</span></div>
-                <div class="TopinfoW">
-                    <div class="ShadoInfoTp">
-                        <h6>Shadow Express Company</h6>
-                        <h6>511 Rankin Avenue Windsor,</h6>
-                        <h6>Ontario Canada</h6>
-                        <h6>+1 (343) 353-2232</h6>
-                    </div>
-                    <div class="FeatureimgQRcode">
-                        <div class="InnerQR">
-                            <img src="https://shadowxpress.com/wp-content/uploads/2026/07/IMG-20260718-WA0082.jpg" alt="QR Code" onerror="this.parentElement.innerHTML='<div class=photo-placeholder>QR Code</div>'">
-                        </div>
-                    </div>
-                </div>
-                <div class="UserinfoTp">
-                    <div class="app-row">Name: ${data.name}</div>
-                    <div class="app-row">Passport No: ${data.passport}</div>
-                    <div class="app-row">Date: ${data.date}</div>
-                </div>
-                <br>
-                <div class="Subjectline">
-                    <h6>SUBJECT: Letter of Agreement</h6>
-                </div>
-                <div class="DataSecondPara">
-                    <div class="app-row">Name: ${data.name}</div>
-                    <p>We are pleased to inform you that we have selected you for the profile of <strong>${data.job}</strong> for regular full time post with our company Shadow Express LTD in 511 Rankin Avenue Windsor Ontario Canada.</p>
-                    <br>
-                    <p>The details of our offer, including terms and conditions are mentioned in this offer of appointment.</p>
-                </div>
-                <div class="Tablerdata">
-                    <table>
-                        <tbody>
-                            <tr><td><strong>Job Profile</strong></td><td>${data.job}</td></tr>
-                            <tr><td><strong>Salary</strong></td><td>${data.salary} USD</td></tr>
-                            <tr><td><strong>Food Provided</strong></td><td>(Duty Meals)</td></tr>
-                            <tr><td><strong>Accommodation</strong></td><td>${data.accommodation}</td></tr>
-                            <tr><td><strong>Contract Period</strong></td><td>${data.contract}</td></tr>
-                            <tr><td><strong>Probation Period</strong></td><td>${data.probation}</td></tr>
-                            <tr><td><strong>Working Hours</strong></td><td>${data.hours}</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="TermandpolicyBox">
-                    <ul>
-                        <li>Hospitalization, Life Insurance and Accident Coverage as per applicable Company Policies.</li>
-                        <li>All allowances will be paid in the form of account credit on the weekly basis.</li>
-                    </ul>
-                    <p>All benefits will be provided such as Air fares (Both Sides), Transportation, Leaves as per Provincial Labor Laws. Following the initial probationary period, a progression and performance review will be conducted on a quarterly basis...</p>
-                    <h3>RECITALS</h3>
-                    <p>In consideration of the covenants and agreements herein contained and the moneys to be paid hereunder the Corporation hereby employs the Employee...</p>
-                    <p>The Employee hereby accepts the employment and agrees to be bound by the terms and conditions set forth herein. The Employee shall devote his full time and attention to the business of the Corporation and shall perform such duties as may be assigned to him from time to time by the Corporation.</p>
-                    <p>The Employee agrees to comply with all rules, regulations, policies and procedures of the Corporation as may be in effect from time to time. The Corporation reserves the right to amend, modify or terminate any of the terms and conditions of this Agreement upon giving written notice to the Employee.</p>
-                    <p>This Agreement shall be governed by and construed in accordance with the laws of the Province of Ontario, Canada. Any dispute arising out of or in connection with this Agreement shall be resolved through arbitration in accordance with the rules of the Canadian Arbitration Association.</p>
-                </div>
-                <div class="StampImageCus">
-                    <div class="Staminner">
-                        <img src="https://shadowcourrier.site/wp-content/uploads/2025/06/264637ec-2a0d-4ef2-92f3-d1264b10ea2d.jpg" alt="Company Stamp" onerror="this.parentElement.innerHTML='<div class=photo-placeholder>Company Stamp</div>'">
-                    </div>
-                </div>
-                <div class="ToCopySec">
-                    <h2>COPY TO:</h2>
-                    <ul>
-                        <li>MANAGING DIRECTOR</li>
-                        <li>CHIEF EXECUTIVE OFFICER</li>
-                        <li>FINANCE MANAGER</li>
-                        <li>ADMINISTRATOR</li>
-                        <li>G. MANAGER</li>
-                        <li>MINISTRY OF INTERIOR</li>
-                        <li>MINISTRY OF FOREIGN AFFAIRS</li>
-                    </ul>
-                </div>
-                <div class="BioMatricSlip">
-                    <h4>BIOMETRIC INSTRUCTION BILL TAX INVOICE</h4>
-                    <div style="margin: 6px 0 10px;">
-                        ${photoHtml}
-                    </div>
-                    <div class="BiodataFirst">
-                        <div class="app-row">Invoice No: ${data.invoice}</div>
-                        <div class="app-row">Full Name: ${data.name}</div>
-                        <div class="app-row">Passport No: ${data.passport}</div>
-                        <div class="app-row">Country: ${data.country}</div>
-                        <div class="app-row">Due: 2 Days</div>
-                    </div>
-                    <div class="BioShortEmail">
-                        <div class="app-row"><strong>Email Address:</strong> info@shadowxpress.com</div>
-                    </div>
-                    <div class="BioPaymentvou">
-                        <h3>Payment Voucher:</h3>
-                        <table>
-                            <thead>
-                                <tr><th style="text-align:left;">Fee Description</th><th style="text-align:right;">Amount</th><th style="text-align:center;">Qty</th><th style="text-align:right;">Total</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>BIOMETRIC</td><td style="text-align:right;">--</td><td style="text-align:center;">1</td><td style="text-align:right;">--</td></tr>
-                                <tr><td>SECURITY</td><td style="text-align:right;">--</td><td style="text-align:center;">1</td><td style="text-align:right;">--</td></tr>
-                                <tr><td>INSURANCE</td><td style="text-align:right;">--</td><td style="text-align:center;">1</td><td style="text-align:right;">--</td></tr>
-                                <tr><td colspan="3" style="text-align:right;"><strong>Total Fees</strong></td><td style="text-align:right;"><strong>Contact Agent</strong></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="PaymentstatusCus">
-                        <div class="app-row">Payment Status: <span style="color:#e67e22;">Contact Agent on WhatsApp</span></div>
-                        <div class="app-row">Payment Mode: To be advised by agent</div>
-                    </div>
-                    <div class="Bioterms">
-                        <h2>NOTE:</h2>
-                        <p>We request you to complete the biometric requirements for your Canada visa process as soon as possible.</p>
-                        <p>Contact our support team on WhatsApp: <strong>+1 (343) 353-2232</strong></p>
-                    </div>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Offer - ${data.name}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f0f2f5; padding: 20px; color: #000; }
+        .container { max-width: 900px; margin: 0 auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); overflow: hidden; }
+        .header { background: #2B0400; color: #fff; padding: 12px 24px; font-size: 14px; font-weight: 600; }
+        #content { padding: 40px 45px 50px; font-family: 'Noto Serif', serif; }
+        .app-row.StatusCus { font-size: 14px; font-family: 'Noto Serif'; color: black; font-weight: 600; margin-bottom: 12px; }
+        .TopinfoW { display: grid; grid-template-columns: 55% 45%; margin-bottom: 8px; }
+        .ShadoInfoTp h6 { font-size: 18px; font-family: 'Noto Serif'; color: #2B0400; line-height: 30px; font-weight: 400; letter-spacing: 0.4px; margin: 0; }
+        .InnerQR { max-width: 30% !important; height: 180px; }
+        .UserinfoTp { margin-top: 5px; }
+        .UserinfoTp .app-row { font-size: 18px; font-family: 'Noto Serif'; color: black; text-transform: capitalize; line-height: 30px; font-weight: 400; }
+        .Subjectline h6 { font-size: 18px; font-family: 'Noto Serif'; color: black; letter-spacing: 0px; font-weight: 400; font-style: normal; margin: 16px 0 10px; }
+        .DataSecondPara .app-row { font-size: 18px; text-transform: capitalize; color: black; font-weight: 400; font-family: 'Noto Serif'; margin-bottom: 6px; }
+        .DataSecondPara p { font-size: 18px; font-family: 'Noto Serif'; color: black; line-height: 30px; max-width: 100%; margin-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        table td, table th { padding: 8px 12px; border: 1px solid #222; font-family: 'Noto Serif', serif; font-size: 16px; }
+        table th { background: #f2f2f2; font-weight: 600; }
+        .TermandpolicyBox { margin-top: 12px; }
+        .TermandpolicyBox ul { padding: 0px 0px 0px 20px; margin-bottom: 10px; }
+        .TermandpolicyBox ul li { font-size: 18px; font-family: 'Noto Serif'; color: black; line-height: 30px; }
+        .TermandpolicyBox p { font-size: 18px; font-family: 'Noto Serif'; font-weight: 400; color: black; line-height: 25px; margin-bottom: 8px; }
+        .TermandpolicyBox h3 { font-size: 26px; color: black; font-family: 'Noto Serif'; font-weight: 600; margin: 0px 0px 0px 0px; }
+        .StampImageCus { display: flex; align-items: center; justify-content: center; margin: 20px 0; }
+        .Staminner { max-width: 50%; margin: 10px auto; }
+        .ToCopySec h2 { font-size: 24px; font-family: 'Noto Serif'; color: black; font-weight: 600; margin-top: 20px; }
+        .ToCopySec ul { padding: 0px 0px 0px 20px; }
+        .ToCopySec ul li { font-size: 16px; font-family: 'Noto Serif'; color: black; line-height: 31px; }
+        .BioMatricSlip > h4 { font-size: 22px; font-family: 'Noto Serif'; color: black; font-weight: 600; margin-top: 25px; }
+        .BioMatricSlip { margin-top: 20px; }
+        .BiodataFirst { display: grid; grid-template-columns: 1fr 1fr; column-gap: 20px; row-gap: 7px; margin: 10px 0; }
+        .BiodataFirst .app-row { font-size: 18px; font-family: 'Noto Serif'; color: black; font-weight: 500; }
+        .BioShortEmail { margin-top: 10px; border-bottom: 1px solid #000; max-width: 40%; padding: 0px 0px 5px 0px; }
+        .BioShortEmail .app-row { font-size: 18px; font-family: 'Noto Serif'; color: black; font-weight: 500; }
+        .BioPaymentvou h3 { font-size: 20px; color: black; font-family: 'Noto Serif'; font-weight: 500; margin: 18px 0 8px; }
+        .BioPaymentvou { margin-top: 30px; }
+        .PaymentstatusCus .app-row { font-size: 22px; font-family: 'Noto Serif'; color: black; font-weight: 500; margin: 6px 0; }
+        .Bioterms h2 { font-size: 22px; font-family: 'Noto Serif'; color: black; font-weight: 500; margin: 0; }
+        .Bioterms { margin-top: 20px; }
+        .Bioterms p { font-size: 16px; font-family: 'Noto Serif'; color: black; margin: 0; line-height: 26px; }
+        @media print { body { background: #fff; padding: 0; } .header { display: none; } }
+        @media(max-width:1024px){
+            .TopinfoW { grid-template-columns: 60% 35%; column-gap: 5%; }
+            .ShadoInfoTp h6 { line-height: 20px; margin-bottom: 10px; }
+            .InnerQR { max-width: 100% !important; }
+            .UserinfoTp { margin-top: 10px; }
+            .BioShortEmail { max-width: 100%; }
+            .Staminner { max-width: 80%; }
+            .PaymentstatusCus .app-row { font-size: 20px; margin-bottom: 10px; }
+            .TermandpolicyBox h3 { font-size: 20px; margin: 30px 0px 10px 0px; }
+            .ToCopySec h2 { font-size: 20px; }
+            .BioMatricSlip > h4 { font-size: 20px; }
+            .Bioterms h2 { font-size: 20px; margin: 30px 0px 10px 0px; }
+        }
+        @media(max-width:767px){
+            .TopinfoW { grid-template-columns: 60% 35%; column-gap: 5%; }
+            .ShadoInfoTp h6 { line-height: 20px; margin-bottom: 10px; }
+            .InnerQR { max-width: 100% !important; }
+            .UserinfoTp { margin-top: 10px; }
+            .BioShortEmail { max-width: 100%; }
+            .Staminner { max-width: 80%; }
+            .PaymentstatusCus .app-row { font-size: 20px; margin-bottom: 10px; }
+            .TermandpolicyBox h3 { font-size: 20px; margin: 0px 0px 0px 0px; }
+            .ToCopySec h2 { font-size: 20px; }
+            .BioMatricSlip > h4 { font-size: 20px; }
+            .Bioterms h2 { font-size: 20px; margin: 30px 0px 10px 0px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">📄 Document Preview</div>
+    <div id="content">
+        <div class="app-row StatusCus">Status: <span style="color:green;">Published</span></div>
+        <div class="TopinfoW">
+            <div class="ShadoInfoTp">
+                <h6>Shadow Express Company</h6>
+                <h6>511 Rankin Avenue Windsor,</h6>
+                <h6>Ontario Canada</h6>
+                <h6>+1 (343) 353-2232</h6>
+            </div>
+            <div class="FeatureimgQRcode">
+                <div class="InnerQR">
+                    ${topPhotoHtml}
                 </div>
             </div>
         </div>
-        </body>
-        </html>`;
+        <div class="UserinfoTp">
+            <div class="app-row">Name: ${data.name}</div>
+            <div class="app-row">Passport No: ${data.passport}</div>
+            <div class="app-row">Date: ${data.date}</div>
+        </div>
+        <br>
+        <div class="Subjectline">
+            <h6>SUBJECT: Letter of Agreement</h6>
+        </div>
+        <div class="DataSecondPara">
+            <div class="app-row">Name: ${data.name}</div>
+            <p>We are pleased to inform you that we have selected you for the profile of <strong>${data.job}</strong> for regular full time post with our company Shadow Express LTD in 511 Rankin Avenue Windsor Ontario Canada.</p>
+            <br>
+            <p>The details of our offer, including terms and conditions are mentioned in this offer of appointment.</p>
+        </div>
+        <div class="Tablerdata">
+            <table>
+                <tbody>
+                    <tr><td><strong>Job Profile</strong></td><td>${data.job}</td></tr>
+                    <tr><td><strong>Salary</strong></td><td>${data.salary} USD</td></tr>
+                    <tr><td><strong>Food Provided</strong></td><td>(Duty Meals)</td></tr>
+                    <tr><td><strong>Accommodation</strong></td><td>${data.accommodation}</td></tr>
+                    <tr><td><strong>Contract Period</strong></td><td>${data.contract}</td></tr>
+                    <tr><td><strong>Probation Period</strong></td><td>${data.probation}</td></tr>
+                    <tr><td><strong>Working Hours</strong></td><td>${data.hours}</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="TermandpolicyBox">
+            <ul>
+                <li>Hospitalization, Life Insurance and Accident Coverage as per applicable Company Policies.</li>
+                <li>All allowances will be paid in the form of account credit on the weekly basis.</li>
+            </ul>
+            <p>All benefits will be provided such as Air fares (Both Sides), Transportation, Leaves as per Provincial Labor Laws. Following the initial probationary period, a progression and performance review will be conducted on a quarterly basis...</p>
+            <h3>RECITALS</h3>
+            <p>In consideration of the covenants and agreements herein contained and the moneys to be paid hereunder the Corporation hereby employs the Employee...</p>
+            <p>The Employee hereby accepts the employment and agrees to be bound by the terms and conditions set forth herein. The Employee shall devote his full time and attention to the business of the Corporation and shall perform such duties as may be assigned to him from time to time by the Corporation.</p>
+            <p>The Employee agrees to comply with all rules, regulations, policies and procedures of the Corporation as may be in effect from time to time. The Corporation reserves the right to amend, modify or terminate any of the terms and conditions of this Agreement upon giving written notice to the Employee.</p>
+            <p>This Agreement shall be governed by and construed in accordance with the laws of the Province of Ontario, Canada. Any dispute arising out of or in connection with this Agreement shall be resolved through arbitration in accordance with the rules of the Canadian Arbitration Association.</p>
+        </div>
+        <div class="StampImageCus">
+            <div class="Staminner">
+                ${stampHtml}
+            </div>
+        </div>
+        <div class="ToCopySec">
+            <h2>COPY TO:</h2>
+            <ul>
+                <li>MANAGING DIRECTOR</li>
+                <li>CHIEF EXECUTIVE OFFICER</li>
+                <li>FINANCE MANAGER</li>
+                <li>ADMINISTRATOR</li>
+                <li>G. MANAGER</li>
+                <li>MINISTRY OF INTERIOR</li>
+                <li>MINISTRY OF FOREIGN AFFAIRS</li>
+            </ul>
+        </div>
+        <div class="BioMatricSlip">
+            <h4>BIOMETRIC INSTRUCTION BILL TAX INVOICE</h4>
+            <div style="margin: 6px 0 10px;">
+                ${bioPhotoHtml}
+            </div>
+            <div class="BiodataFirst">
+                <div class="app-row">Invoice No: ${data.invoice}</div>
+                <div class="app-row">Full Name: ${data.name}</div>
+                <div class="app-row">Passport No: ${data.passport}</div>
+                <div class="app-row">Country: ${data.country}</div>
+                <div class="app-row">Due: 2 Days</div>
+            </div>
+            <div class="BioShortEmail">
+                <div class="app-row"><strong>Email Address:</strong> info@shadowxpress.com</div>
+            </div>
+            <div class="BioPaymentvou">
+                <h3>Payment Voucher:</h3>
+                <table>
+                    <thead>
+                        <tr><th style="text-align:left;">Fee Description</th><th style="text-align:right;">Amount</th><th style="text-align:center;">Qty</th><th style="text-align:right;">Total</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>BIOMETRIC</td><td style="text-align:right;">--</td><td style="text-align:center;">1</td><td style="text-align:right;">--</td></tr>
+                        <tr><td>SECURITY</td><td style="text-align:right;">--</td><td style="text-align:center;">1</td><td style="text-align:right;">--</td></tr>
+                        <tr><td>INSURANCE</td><td style="text-align:right;">--</td><td style="text-align:center;">1</td><td style="text-align:right;">--</td></tr>
+                        <tr><td colspan="3" style="text-align:right;"><strong>Total Fees</strong></td><td style="text-align:right;"><strong>Contact Agent</strong></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="PaymentstatusCus">
+                <div class="app-row">Payment Status: <span style="color:#e67e22;">Contact Agent on WhatsApp</span></div>
+                <div class="app-row">Payment Mode: To be advised by agent</div>
+            </div>
+            <div class="Bioterms">
+                <h2>NOTE:</h2>
+                <p>We request you to complete the biometric requirements for your Canada visa process as soon as possible.</p>
+                <p>Contact our support team on WhatsApp: <strong>+1 (343) 353-2232</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>`;
             }
 
-            // ── Generate and show preview ──
             function generatePreview() {
                 const data = getFormData();
                 if (!data.name) {
                     showToast('Please enter the Full Name.', 'error');
                     return;
                 }
-                currentHtml = buildHtml(data);
-                currentFilename = `${data.name.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_-]/g, '')}_Job_Offer.html`;
+                if (!data.passport) {
+                    showToast('Please enter Passport Number.', 'error');
+                    return;
+                }
 
-                // Show in iframe
+                currentFilename = `${data.passport.replace(/[^a-zA-Z0-9_-]/g, '')}.html`;
+                if (!currentFilename || currentFilename === '.html') {
+                    currentFilename = 'default.html';
+                }
+
+                currentHtml = buildHtml(data);
+
                 previewIframe.style.display = 'block';
                 placeholder.style.display = 'none';
                 const blob = new Blob([currentHtml], { type: 'text/html' });
                 const url = URL.createObjectURL(blob);
                 previewIframe.src = url;
 
-                // Update status
                 previewDot.className = 'dot';
                 fileStatus.textContent = `✅ ${currentFilename}`;
                 showToast(`Preview ready: ${currentFilename}`, 'success', 3000);
             }
 
-            // ── Download HTML ──
             function downloadHtml() {
                 if (!currentHtml) {
                     showToast('Please generate a preview first.', 'error');
@@ -984,105 +818,9 @@
                 a.click();
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
-                showToast(`Downloaded: ${currentFilename}`, 'success');
+                showToast(`✅ Downloaded: ${currentFilename}`, 'success');
             }
 
-            // ── Upload to GitHub ──
-            async function uploadToGitHub() {
-                if (isUploading) return;
-                if (!currentHtml) {
-                    showToast('Please generate a preview first.', 'error');
-                    return;
-                }
-
-                const token = githubToken.value.trim() || localStorage.getItem('gh_token');
-                if (!token) {
-                    showToast('Please enter a GitHub Personal Access Token (repo scope).', 'error');
-                    tokenSection.classList.add('visible');
-                    return;
-                }
-
-                // GitHub repo info
-                const owner = 'shadowxpress';
-                const repo = 'shadow';
-                const branch = 'main';
-                const path = `passport-dtl/${currentFilename}`;
-                const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
-
-                isUploading = true;
-                btnUpload.disabled = true;
-                btnUpload.innerHTML = '<span class="spinner"></span> Uploading...';
-                connectionStatus.textContent = '⏳ Uploading...';
-
-                try {
-                    // 1. Get the current file SHA if it exists
-                    let sha = null;
-                    try {
-                        const getRes = await fetch(apiUrl, {
-                            headers: {
-                                'Authorization': `token ${token}`,
-                                'Accept': 'application/vnd.github.v3+json',
-                            }
-                        });
-                        if (getRes.ok) {
-                            const data = await getRes.json();
-                            sha = data.sha;
-                        }
-                    } catch (_) { /* file doesn't exist */ }
-
-                    // 2. Encode content as base64
-                    const encoded = btoa(unescape(encodeURIComponent(currentHtml)));
-
-                    // 3. Build the payload
-                    const payload = {
-                        message: `Add/update job offer: ${currentFilename}`,
-                        content: encoded,
-                        branch: branch,
-                    };
-                    if (sha) payload.sha = sha;
-
-                    // 4. PUT request
-                    const putRes = await fetch(apiUrl, {
-                        method: 'PUT',
-                        headers: {
-                            'Authorization': `token ${token}`,
-                            'Accept': 'application/vnd.github.v3+json',
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(payload),
-                    });
-
-                    const result = await putRes.json();
-
-                    if (putRes.ok) {
-                        const htmlUrl = result.content?.html_url || `https://github.com/${owner}/${repo}/blob/${branch}/${path}`;
-                        showToast(`✅ Uploaded successfully! ${currentFilename}`, 'success', 5000);
-                        connectionStatus.textContent = '✅ Uploaded';
-                        fileStatus.textContent = `☁️ ${currentFilename}`;
-                        // Open in new tab?
-                        if (confirm(`✅ Uploaded!\n\nOpen the file on GitHub?`)) {
-                            window.open(htmlUrl, '_blank');
-                        }
-                    } else {
-                        throw new Error(result.message || 'Upload failed');
-                    }
-                } catch (err) {
-                    console.error(err);
-                    showToast(`❌ Upload failed: ${err.message}`, 'error', 6000);
-                    connectionStatus.textContent = '❌ Error';
-                } finally {
-                    isUploading = false;
-                    btnUpload.disabled = false;
-                    btnUpload.innerHTML = '⬆ Upload to GitHub';
-                    setTimeout(() => {
-                        if (connectionStatus.textContent === '⏳ Uploading...' || connectionStatus.textContent === '❌ Error') {
-                            connectionStatus.textContent = '● Ready';
-                        }
-                    }, 3000);
-                }
-            }
-
-            // ── Reset form to defaults ──
             function resetForm() {
                 f_name.value = 'MOHSIN RAZA';
                 f_passport.value = 'VH9899641';
@@ -1095,8 +833,8 @@
                 f_contract.value = 'Two Years';
                 f_accommodation.value = '(Quad Sharing Rooms) – Two (2)';
                 f_invoice.value = 'GJ316940';
-                f_photo.value = '';
-                // Reset preview
+                f_photo.value = 'https://ui-avatars.com/api/?name=MOHSIN+RAZA&background=2B0400&color=fff&size=100';
+                updateFilenamePreview();
                 previewIframe.style.display = 'none';
                 placeholder.style.display = 'flex';
                 previewDot.className = 'dot idle';
@@ -1106,49 +844,18 @@
                 showToast('Form reset to defaults', 'info');
             }
 
-            // ── Token helpers ──
-            function saveToken() {
-                const val = githubToken.value.trim();
-                if (val) {
-                    localStorage.setItem('gh_token', val);
-                    showToast('Token saved securely (localStorage)', 'success');
-                } else {
-                    localStorage.removeItem('gh_token');
-                    showToast('Token cleared', 'info');
-                }
-            }
-
-            function clearToken() {
-                githubToken.value = '';
-                localStorage.removeItem('gh_token');
-                showToast('Token removed', 'info');
-            }
-
-            function toggleTokenSection() {
-                tokenSection.classList.toggle('visible');
-                if (tokenSection.classList.contains('visible')) {
-                    githubToken.focus();
-                }
-            }
-
-            // ── Event bindings ──
             btnPreview.addEventListener('click', generatePreview);
             btnDownload.addEventListener('click', downloadHtml);
-            btnUpload.addEventListener('click', uploadToGitHub);
             btnReset.addEventListener('click', resetForm);
-            btnToggleToken.addEventListener('click', toggleTokenSection);
-            btnSaveToken.addEventListener('click', saveToken);
-            btnClearToken.addEventListener('click', clearToken);
 
-            // Enter key on token input saves
-            githubToken.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') saveToken();
+            document.querySelectorAll('#formGrid input').forEach(input => {
+                input.addEventListener('input', () => {
+                    updateFilenamePreview();
+                });
             });
 
-            // Click on placeholder to trigger preview
             placeholder.addEventListener('click', generatePreview);
 
-            // Auto-preview on Ctrl+Enter
             document.addEventListener('keydown', (e) => {
                 if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
                     e.preventDefault();
@@ -1156,15 +863,15 @@
                 }
             });
 
-            // ── Initial state ──
-            // Generate a preview on load so the user sees something
+            updateFilenamePreview();
+
             setTimeout(() => {
                 generatePreview();
-            }, 300);
+            }, 500);
 
-            console.log('🚀 Shadow Admin ready.');
-            console.log('📁 Repo: shadowxpress/shadow/passport-dtl');
-            console.log('💡 Use Ctrl+Enter to preview.');
+            console.log('📄 Shadow Document Generator ready!');
+            console.log('📁 File saved as: [PASSPORT].html');
+            console.log('💡 No token needed - just download!');
 
         })();
     </script>
