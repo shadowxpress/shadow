@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>UK Visa Application – Result</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f0f2f5;
+            font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 16px;
+            color: #1a1a1a;
+        }
+
+        .result-container {
+            width: 100%;
+            max-width: 600px;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+
+        /* Header */
+        .result-header {
+            background: #0b2c4b; /* Deep navy */
+            padding: 24px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            color: white;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .logo-text {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+
+        .logo-text small {
+            display: block;
+            font-size: 12px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .ref-box {
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 8px 14px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .ref-box span {
+            font-weight: 400;
+            color: rgba(255,255,255,0.75);
+            margin-right: 6px;
+        }
+
+        /* Body */
+        .result-body {
+            padding: 28px;
+        }
+
+        .status-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+
+        .status-badge {
+            font-size: 14px;
+            font-weight: 700;
+            padding: 8px 18px;
+            border-radius: 30px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-approved {
+            background: #e0f5e9;
+            color: #0c6b3f;
+        }
+
+        .status-refused {
+            background: #ffeaea;
+            color: #b71c1c;
+        }
+
+        .status-processing {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-message {
+            font-size: 15px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        /* Details Table */
+        .details-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 28px;
+        }
+
+        .details-table td {
+            padding: 14px 0;
+            border-bottom: 1px solid #eceef2;
+            font-size: 15px;
+            vertical-align: top;
+        }
+
+        .details-table td:first-child {
+            width: 40%;
+            color: #5f6b7a;
+            font-weight: 500;
+        }
+
+        .details-table td:last-child {
+            color: #0d1b2a;
+            font-weight: 600;
+        }
+
+        .details-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Info box */
+        .info-box {
+            background: #f7f9fc;
+            border-left: 4px solid #0b2c4b;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 28px;
+            font-size: 14px;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+
+        .info-box strong {
+            color: #0b2c4b;
+        }
+
+        /* Action buttons */
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .btn {
+            flex: 1 1 auto;
+            min-width: 130px;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #0b2c4b;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0a2540;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(11,44,75,0.2);
+        }
+
+        .btn-outline {
+            background: white;
+            color: #0b2c4b;
+            border: 2px solid #0b2c4b;
+        }
+
+        .btn-outline:hover {
+            background: #f0f2f5;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 480px) {
+            .result-header {
+                padding: 18px 20px;
+            }
+            .result-body {
+                padding: 20px;
+            }
+            .btn {
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="result-container">
+        <!-- Header -->
+        <div class="result-header">
+            <div class="logo-section">
+                <div class="logo-icon">🌐</div>
+                <div class="logo-text">
+                    UK Visa Services
+                    <small>Official Application Centre</small>
+                </div>
+            </div>
+            <div class="ref-box">
+                <span>Ref:</span> <strong id="displayRef">GWF047669499</strong>
+            </div>
+        </div>
+
+        <!-- Result Body -->
+        <div class="result-body">
+            <!-- Status -->
+            <div class="status-row">
+                <span class="status-badge status-approved" id="statusBadge">Approved</span>
+                <span class="status-message" id="statusMessage">Your visa application has been processed.</span>
+            </div>
+
+            <!-- Applicant Details Table -->
+            <table class="details-table">
+                <tr>
+                    <td>Applicant Name</td>
+                    <td id="applicantName">Muhammad Kaif</td>
+                </tr>
+                <tr>
+                    <td>Passport Number</td>
+                    <td id="passportNo">AB1234567</td>
+                </tr>
+                <tr>
+                    <td>Visa Category</td>
+                    <td id="visaCategory">Standard Visitor</td>
+                </tr>
+                <tr>
+                    <td>Decision Date</td>
+                    <td id="decisionDate">2026-08-11</td>
+                </tr>
+                <tr>
+                    <td>Valid Until</td>
+                    <td id="validUntil">2026-11-10</td>
+                </tr>
+            </table>
+
+            <!-- Important Information -->
+            <div class="info-box">
+                <strong>Next steps:</strong> Please download the official decision letter below. 
+                You may also print this page for your records. Your passport will be returned via 
+                the courier service you selected.
+            </div>
+
+            <!-- Buttons -->
+            <div class="action-buttons">
+                <a href="./GWF047669499.pdf" class="btn btn-primary" download id="downloadBtn">
+                    📄 Download PDF
+                </a>
+                <button class="btn btn-outline" onclick="window.print()">
+                    🖨️ Print Result
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // This script dynamically fills the result data.
+        // In your actual implementation, you can replace these static values
+        // with data fetched from a backend or generated based on the user's search.
+
+        const sampleResult = {
+            ref: "GWF047669499",
+            applicant: "Muhammad Kaif",
+            passport: "AB1234567",
+            visaCategory: "Standard Visitor",
+            status: "Approved",   // "Approved", "Refused", "Processing"
+            decisionDate: "2026-08-11",
+            validUntil: "2026-11-10",
+            message: "Your visa application has been processed."
+        };
+
+        function populateResult(data) {
+            document.getElementById('displayRef').textContent = data.ref;
+            document.getElementById('applicantName').textContent = data.applicant;
+            document.getElementById('passportNo').textContent = data.passport;
+            document.getElementById('visaCategory').textContent = data.visaCategory;
+            document.getElementById('decisionDate').textContent = data.decisionDate;
+            document.getElementById('validUntil').textContent = data.validUntil;
+            document.getElementById('statusMessage').textContent = data.message;
+
+            const badge = document.getElementById('statusBadge');
+            badge.textContent = data.status;
+            badge.className = 'status-badge';
+            if (data.status === 'Approved') badge.classList.add('status-approved');
+            else if (data.status === 'Refused') badge.classList.add('status-refused');
+            else badge.classList.add('status-processing');
+
+            // Update download link
+            const downloadBtn = document.getElementById('downloadBtn');
+            downloadBtn.href = `./${data.ref}.pdf`;
+            downloadBtn.download = `${data.ref}.pdf`;
+        }
+
+        // Automatically fill with sample data (remove this if you handle it elsewhere)
+        populateResult(sampleResult);
+    </script>
+
+</body>
+</html>
